@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -123,6 +124,9 @@ STATICFILES_DIRS = [ BASE_DIR / 'static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#MeDIA_URL
+#MEDIA_URL
 MEDIA_URL = '/upload/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
+
+#USER
+AUTH_USER_MODEL = 'user.User'

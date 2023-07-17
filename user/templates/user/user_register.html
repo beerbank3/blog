@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<!-- tailwindCSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- reset.css : meyerweb -->
+<link rel="stylesheet" href="{% static 'css/reset.css' %}" />
+<!-- font : pretendard -->
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+<link rel="stylesheet" href="{% static 'css/global.css' %}" />
+
+<!-- layout -->
+<link rel="stylesheet" href="{% static 'css/header.css' %}" />
+<link rel="stylesheet" href="{% static 'css/footer.css' %}" />
+<link rel="stylesheet" href="{% static 'css/about.css' %}" />
+
+<!-- component -->
+<link rel="stylesheet" href="{% static 'css/button.css' %}" />
+<link rel="stylesheet" href="{% static 'css/banner.css' %}" />
+<link rel="stylesheet" href="{% static 'css/category.css' %}" />
+<link rel="stylesheet" href="{% static 'css/author.css' %}" />
+
+<link rel="stylesheet" href="{% static 'css/post.css' %}" />
+<link rel="stylesheet" href="{% static 'css/posts.css' %}" />
+<link rel="stylesheet" href="{% static 'css/main.css' %}" />
+
+{% endblock %}
+
+{% block content %}
+<body class="bg-gray-200">
+    <div class="container mx-auto">
+        <form action="{% url 'user:register' %}" method="POST" class="max-w-3xl mx-auto mt-8 p-4 bg-white shadow-md rounded space-y-8">
+            {% csrf_token %}
+            <h2 class="text-2xl mb-4 font-bold">회원가입</h2>
+
+            {{ form.as_p }}
+
+            <div class="flex items-center justify-between mt-6">
+                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                가입하기
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+{% endblock %}

@@ -8,7 +8,7 @@
 		<title>Travel Blog</title>
         {% block styles %}
         
-        {% endblock  %}
+        {% endblock %}
 	</head>
 	<body>
 		<!-- header -->
@@ -20,25 +20,43 @@
 					</a>
 				</h1>
 				<ul>
-					<!-- 로그인 -->
+					{% if user.is_authenticated %}
+					<!-- 프로필 이미지 -->
 					<li class="profile-img">
 						<a href="#">
 							<img src="{% static 'assets/profile.jpg' %}" alt="My Page" />
 						</a>
 					</li>
+					<!-- 글쓰기 -->
 					<li>
-						<a href="#" class="button">
+						<a href="{% url 'blog:write' %}" class="button">
 							<img src="{% static 'assets/icon-modify-white.svg' %}" alt="" />
 							<span>Write</span>
 						</a>
 					</li>
+					<!-- 로그아웃 -->
 					<li>
-						<button class="button white">
+						<a href="{% url 'user:logout' %}" class="button white">
 							<img src="{% static 'assets/icon-logout.svg' %}" alt="" />
 							<span>Logout</span>
-						</button>
+						</a>
 					</li>
-					<!-- //로그인 -->
+					{% else %}
+					<!-- 로그인 -->
+					<li>
+						<a href="{% url 'user:login' %}" class="button gray">
+							<img src="{% static 'assets/icon-login.svg' %}" alt="" />
+							<span>Login</span>
+						</a>
+					</li>
+					<!-- 회원가입 -->
+					<li class="only-pc">
+						<a href="{% url 'user:register' %}" class="button gray">
+							<img src="{% static 'assets/icon-register.svg' %}" alt="" />
+							<span>Register</span>
+						</a>
+					</li>
+					{% endif %}
 			</div>
 		</header>
 		<!--// header -->
