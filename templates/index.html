@@ -39,41 +39,19 @@
 				</h1>
 				<ul>
 					<!-- 로그인 -->
-					<li class="profile-img">
-						<a href="#">
-							<img src="{% static 'assets/profile.jpg' %}" alt="My Page" />
-						</a>
-					</li>
-					<li>
-						<a href="#" class="button">
-							<img src="{% static 'assets/icon-modify-white.svg' %}" alt="" />
-							<span>Write</span>
-						</a>
-					</li>
-					<li>
-						<button class="button white">
-							<img src="{% static 'assets/icon-logout.svg' %}" alt="" />
-							<span>Logout</span>
-						</button>
-					</li>
-					<!-- //로그인 -->
-
-					<!-- 로그아웃 -->
-					<!--
 					<li>
 						<a href="#" class="button gray">
 							<img src="{% static 'assets/icon-login.svg' %}" alt="" />
 							<span>Login</span>
 						</a>
 					</li>
+                    <!-- 회원가입 -->
 					<li class="only-pc">
 						<a href="#" class="button gray">
 							<img src="{% static 'assets/icon-register.svg' %}" alt="" />
 							<span>Register</span>
 						</a>
 					</li>
-          -->
-					<!--// 로그아웃 -->
 				</ul>
 			</div>
 		</header>
@@ -102,7 +80,7 @@
 					<li>
 						<a href="post-view.html" class="post">
 							<article>
-								<img src="./images/post-img6.jpg" alt="" />
+								<img src="{% static 'images/post-img6.jpg' %}" alt="" />
 								<div class="contents-wrap">
 									<!-- category -->
 									<dl class="category">
@@ -302,25 +280,6 @@
 					</li>
 				</ul>
 				<!-- //posts -->
-
-				<!-- about -->
-				<aside class="about">
-					<h2>About Me</h2>
-					<img src="{% static 'images/profile.jpg' %}" alt="" class="user-profile" />
-					<p class="user-name">Chilli</p>
-					<p class="user-description">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-					<h3>Categories</h3>
-					<ul class="categories">
-						<li><a href="#">Life</a></li>
-						<li><a href="#">Style</a></li>
-						<li><a href="#">Tech</a></li>
-						<li><a href="#">Sport</a></li>
-						<li><a href="#">Photo</a></li>
-						<li><a href="#">Develop</a></li>
-						<li><a href="#">Music</a></li>
-					</ul>
-				</aside>
-				<!-- //about -->
 			</div>
 		</main>
 		<!-- //main -->
