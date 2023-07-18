@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
 app_name = 'blog'
@@ -23,4 +25,8 @@ urlpatterns = [
     # path("detail/<int:pk>/hashtag/write/", views.HashTagWrite.as_view(), name='tag-write'),
     # 태그 삭제
     # path("detail/<int:pk>/hashtag/delete/", views.HashTagDelete.as_view(), name='tag-delete'),
+    # 이미지 저장
+    path("upload/", views.upload_image, name='upload'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

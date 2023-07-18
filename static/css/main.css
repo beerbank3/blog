@@ -1,6 +1,6 @@
 main > .max-width {
 	display: flex;
-	flex-direction: row-reverse;
+	/* flex-direction: row-reverse; */
 	gap: 2.4rem;
 	position: relative;
 }

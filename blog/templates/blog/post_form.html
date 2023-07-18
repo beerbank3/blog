@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<!-- tailwindCSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- reset.css : meyerweb -->
+<link rel="stylesheet" href="{% static 'css/reset.css' %}" />
+<!-- font : pretendard -->
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+<link rel="stylesheet" href="{% static 'css/global.css' %}" />
+
+<!-- layout -->
+<link rel="stylesheet" href="{% static 'css/header.css' %}" />
+<link rel="stylesheet" href="{% static 'css/footer.css' %}" />
+<link rel="stylesheet" href="{% static 'css/about.css' %}" />
+
+    <!-- component -->
+<link rel="stylesheet" href="{% static 'css/button.css' %}" />
+<link rel="stylesheet" href="{% static 'css/banner.css' %}" />
+<link rel="stylesheet" href="{% static 'css/category.css' %}" />
+<link rel="stylesheet" href="{% static 'css/author.css' %}" />
+
+<link rel="stylesheet" href="{% static 'css/post.css' %}" />
+<link rel="stylesheet" href="{% static 'css/posts.css' %}" />
+<link rel="stylesheet" href="{% static 'css/main.css' %}" />
+
+{% endblock %}
+
+{% block content %}
+<!-- TOAST UI Editor CDN URL(CSS)-->
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<body class="bg-gray-200">
+    <div class="container mx-auto">
+        <form action="{% url 'blog:write' %}" method="post" class="input-form max-w-max mx-auto bg-white p-8 shadow-md rounded">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="title">제목</label>
+                <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" name="title" type="text" placeholder="제목을 입력해주세요.">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="content">내용</label>
+                <div id="editor"></div>
+            </div>
+            <div class="flex items-center justify-end"> <!-- 수정된 부분 -->
+                <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 mr-4" href="/blog"> <!-- 수정된 부분 -->
+                취소
+                </a>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                작성
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+{% endblock %}
+
+{% block script %}
+<!-- TOAST UI Editor CDN URL(JS) -->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script src="{% static 'js/form.js' %}"></script>    
+{% endblock %}

@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.views import View
+from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from .models import Post
+from django.conf import settings
+from os.path import relpath
+from .models import Post, UploadImage
 from .forms import PostForm
+import os
 # Create your views here.
 
 
@@ -32,7 +35,8 @@ class Write(LoginRequiredMixin, View):
     
     def post(self, request):
         form = PostForm(request.POST)
-        
+        print(form)
+        print(form.is_valid())
         if form.is_valid():
             post = form.save(commit=False)
             post.writer = request.user
@@ -64,3 +68,18 @@ class DetailView(View):
         }
         
         return render(request, 'blog/post_detail.html', context)
+
+
+def upload_image(request):
+    if request.method == 'POST' and request.FILES.get('images'):
+        image_file = request.FILES['images']
+        upload_image = UploadImage(image=image_file)
+        upload_image.save()
+
+        image_path = os.path.relpath(upload_image.image.path, settings.MEDIA_ROOT)
+
+        response_data = {'message': '이미지가 성공적으로 업로드되었습니다.', 'image_path': '/blog/media/images/'+image_path}
+        return JsonResponse(response_data)
+    else:
+        response_data = {'message': '이미지 업로드에 실패했습니다.'}
+        return JsonResponse(response_data, status=400)
