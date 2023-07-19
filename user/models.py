@@ -35,7 +35,7 @@ class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True, max_length=255)
     name = models.CharField(max_length=50, null=True, blank=True)
-    profile_image = models.ImageField(upload_to='profile_images', null=True)
+    profile_image = models.ImageField(upload_to='profile_images/', null=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -49,4 +49,7 @@ class User(AbstractUser):
     objects = UserManager()
     
     def __str__(self):
-        return self.name
+        if(self.name):
+            return self.name
+        else:
+            return self.email

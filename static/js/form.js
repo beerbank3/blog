@@ -56,7 +56,7 @@ form.addEventListener('submit', (e) => {
     })
     .then(response => response.text())
     .then(data => {
-      console.log('업로드 완료:', data);
+      window.location.href = '/blog';
     })
     .catch(error => {
       console.error('업로드 실패:', error);

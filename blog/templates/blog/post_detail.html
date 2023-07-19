@@ -2,25 +2,26 @@
 {% load static %}
 
 {% block styles %}
-	<!-- reset.css : meyerweb -->
-	<link rel="stylesheet" href="{% static 'css/reset.css' %}" />
-	<!-- font : pretendard -->
-	<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+<!-- reset.css : meyerweb -->
+<link rel="stylesheet" href="{% static 'css/reset.css' %}" />
+<!-- font : pretendard -->
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
 
-	<link rel="stylesheet" href="{% static 'css/global.css' %}" />
+<link rel="stylesheet" href="{% static 'css/global.css' %}" />
 
-	<!-- layout -->
-	<link rel="stylesheet" href="{% static 'css/header.css' %}" />
-	<link rel="stylesheet" href="{% static 'css/footer.css' %}" />
+<!-- layout -->
+<link rel="stylesheet" href="{% static 'css/header.css' %}" />
+<link rel="stylesheet" href="{% static 'css/footer.css' %}" />
 
-	<!-- component -->
-	<link rel="stylesheet" href="{% static 'css/button.css' %}" />
-	<link rel="stylesheet" href="{% static 'css/banner.css' %}" />
-	<link rel="stylesheet" href="{% static 'css/category.css' %}" />
-	<link rel="stylesheet" href="{% static 'css/author.css' %}" />
+<!-- component -->
+<link rel="stylesheet" href="{% static 'css/button.css' %}" />
+<link rel="stylesheet" href="{% static 'css/banner.css' %}" />
+<link rel="stylesheet" href="{% static 'css/category.css' %}" />
+<link rel="stylesheet" href="{% static 'css/author.css' %}" />
 
-	<link rel="stylesheet" href="{% static 'css/wrapbox.css' %}" />
-	<link rel="stylesheet" href="{% static 'css/view.css' %}" />
+<link rel="stylesheet" href="{% static 'css/wrapbox.css' %}" />
+<link rel="stylesheet" href="{% static 'css/view.css' %}" />
+
 {% endblock %}
 
 {% block content %}
@@ -43,7 +44,7 @@
 				<!-- author -->
 				<dl class="author-wrap">
 					<dt class="a11y-hidden">Author</dt>
-					<dd class="author"><img src="./images/profile.jpg" alt="" /> Chilli</dd>
+					<dd class="author"><img src="{{ user_image }}" alt="" /> {{user_name}}</dd>
 					<dt class="a11y-hidden">Created</dt>
 					<dd class="created">{{post_created_at}}</dd>
 				</dl>
@@ -63,9 +64,8 @@
 				</div>
 				<hr />
 				<div class="view-contents">
-					<p>
-						{{ post_content }}
-					</p>
+					<div class="viewer">
+					</div>
 				</div>
 				<div class="btn-group">
 					<a href="#" class="btn-modify">
@@ -83,4 +83,17 @@
 	</div>
 </div>
 <!-- //post view  -->
+{% endblock %}
+
+{% block script %}
+<!-- TOAST UI Editor CDN URL(JS) -->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
+<script>
+	const viewer = new toastui.Editor({
+		el: document.querySelector('.viewer'),
+		viewer: true,
+		initialValue: '{{ post_content }}'
+	});
+</script>
+{% comment %} <script src="{% static 'js/detail.js' %}"></script> {% endcomment %}
 {% endblock %}

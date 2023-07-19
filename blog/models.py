@@ -14,8 +14,8 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=30)
     content = models.TextField()
-    writer = models.ForeignKey(User, on_delete=models.CASCADE)
-    upload_files = models.ImageField(upload_to="image", null=True)
+    writer = models.ForeignKey(User, on_delete=models.CASCADE) #에러발생부분
+    upload_files = models.ImageField(upload_to="image/", null=True)
     categories = models.ManyToManyField(Category)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -34,7 +34,8 @@ class Comment(models.Model):
     
 
 class UploadImage(models.Model):
-    image = models.ImageField(upload_to='images')
+    image = models.ImageField(upload_to='images/')
+    writer = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

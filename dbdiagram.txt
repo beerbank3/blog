@@ -1,0 +1,55 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+// URL: https://dbdiagram.io/d
+Table follows {
+  following_user_id integer
+  followed_user_id integer
+  created_at timestamp 
+}
+
+Table users {
+  pk integer [primary key]
+  email varchar
+  name varchar
+  profile_image varchar
+  is_staff boolean
+  is_superuser boolean
+  is_active boolean
+  last_login date
+  date_joined date
+}
+
+Table posts {
+  id integer [primary key]
+  title varchar
+  content text
+  writer integer
+  upload_files varchar
+  views integer
+  categories varchar
+  created_at date
+  updated_at date
+}
+
+Table Comment {
+  post integer
+  content text
+  writer varchar
+  created_at date
+}
+
+Table UploadImage {
+  image varchar
+  writer integer
+}
+
+Table Category {
+  name varchar
+}
+Ref: posts.writer - users.pk // many-to-one
+
+Ref: Category.name < posts.categories
+
+Ref: users.pk - UploadImage.writer
+
+Ref: Comment.post - posts.id

@@ -45,8 +45,8 @@
 		<!-- about -->
 		<aside class="about">
 			<h2>About Me</h2>
-			<img src="{% static 'images/profile.jpg' %}" alt="" class="user-profile" />
-			<p class="user-name">Chilli</p>
+			<img src="/blog/media/{{ user.profile_image }}" alt="" class="user-profile" />
+			<p class="user-name">{{ user }}</p>
 			<p class="user-description">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 			<h3>Categories</h3>
 			<ul class="categories">
@@ -83,15 +83,17 @@
 							<!-- author -->
 							<dl class="author-wrap">
 								<dt class="a11y-hidden">Author</dt>
-								<dd class="author"><img src="./images/profile.jpg" alt="" /> {{post.writer}}</dd>
+								<dd class="author"><img src="/blog/media/{{post.writer.profile_image}}" alt="" />{{post.writer}}</dd>
 								<dt class="a11y-hidden">Created</dt>
 								<dd class="created">{{post.created_at}}</dd>
 							</dl>
 							<!-- //author -->
 
+							{% comment %}
 							<p class="post-description">
 								{{ post.content }}
 							</p>
+							{% endcomment %}
 						</div>
 					</article>
 				</a>

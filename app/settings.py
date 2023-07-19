@@ -130,3 +130,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #USER
 AUTH_USER_MODEL = 'user.User'
+
+#
+DEFAULT_PROFILE_IMAGE_URL = '/static/assets/free-icon-person.png'

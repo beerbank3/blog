@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.conf import settings
 from os.path import relpath
 from .models import Post, UploadImage
@@ -11,32 +13,34 @@ import os
 
 
 ### Post
+@method_decorator(login_required, name='dispatch')
 class Index(View):
     
     def get(self, request):
         posts = Post.objects.prefetch_related('categories').all()
         context = {
             "posts": posts,
-            "title": "My Blog"
+            "title": "My Blog",
         }
         return render(request, 'blog/index.html', context)
     
 
 ### Write
+@method_decorator(login_required, name='dispatch')
 class Write(LoginRequiredMixin, View):
     
     def get(self, request):
+        user = request.user
         form = PostForm()
         context = {
             'form': form,
-            "title": "Blog"
+            "title": "Blog",
+            "user": user
         }
         return render(request, 'blog/post_form.html', context)
     
     def post(self, request):
         form = PostForm(request.POST)
-        print(form)
-        print(form.is_valid())
         if form.is_valid():
             post = form.save(commit=False)
             post.writer = request.user
@@ -51,6 +55,7 @@ class Write(LoginRequiredMixin, View):
     
 
 ### Detail
+@method_decorator(login_required, name='dispatch')
 class DetailView(View):
     
     def get(self, request, pk):
@@ -64,16 +69,19 @@ class DetailView(View):
             'post_content': post.content,
             'post_uploadfiles': post.upload_files,
             'post_categories' : post.categories.all(),
-            'post_created_at': post.created_at.strftime('%Y-%m-%d'),
+            'post_created_at': post.created_at.strftime('%Y-%m-%d')
         }
         
         return render(request, 'blog/post_detail.html', context)
 
 
+### Upload_Image
+@login_required
 def upload_image(request):
     if request.method == 'POST' and request.FILES.get('images'):
         image_file = request.FILES['images']
-        upload_image = UploadImage(image=image_file)
+        writer = request.user
+        upload_image = UploadImage(image=image_file, writer=writer)
         upload_image.save()
 
         image_path = os.path.relpath(upload_image.image.path, settings.MEDIA_ROOT)
