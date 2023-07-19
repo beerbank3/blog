@@ -67,7 +67,11 @@
 			<li>
 				<a href="/blog/detail/{{ post.pk }}" class="post">
 					<article>
-						<img src="{{ post.upload_files }}" alt="" />
+						{% if post.upload_files %}
+							<img src="/blog/media/{{ post.upload_files }}" alt="" />
+						{% else %}
+							<img src="/static/assets/Thumnail.png" alt="" />
+						{% endif %}
 						<div class="contents-wrap">
 							<!-- category -->
 							<dl class="category">
