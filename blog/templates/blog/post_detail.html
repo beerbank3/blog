@@ -44,7 +44,14 @@
 				<!-- author -->
 				<dl class="author-wrap">
 					<dt class="a11y-hidden">Author</dt>
-					<dd class="author"><img src="{{ user_image }}" alt="" /> {{user_name}}</dd>
+					<dd class="author">
+						{% if user.profile_image %}
+							<img src="/blog/media/{{ user.profile_image}}" alt="" />
+						{% else %}
+							<img src="/static/assets/free-icon-person.png" alt="" />
+						{% endif %}
+						{{user}}
+					</dd>
 					<dt class="a11y-hidden">Created</dt>
 					<dd class="created">{{post_created_at}}</dd>
 				</dl>
@@ -67,14 +74,16 @@
 					<div class="viewer">
 					</div>
 				</div>
+				{% if user.id == post_writer.id %}
 				<div class="btn-group">
-					<a href="#" class="btn-modify">
+					<a href="{% url 'blog:edit' pk=post_id %}" class="btn-modify">
 						<span class="a11y-hidden">modify</span>
 					</a>
 					<button type="button" class="btn-delete">
 						<span class="a11y-hidden">delete</span>
 					</button>
 				</div>
+				{% endif %}
 				<a href="./" class="btn-back">
 					<span class="a11y-hidden">Back</span>
 				</a>

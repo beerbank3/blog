@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, redirect, get_object_or_404
 from django.views import View
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
 from os.path import relpath
-from .models import Post, UploadImage
+from .models import Post, Category, UploadImage
 from .forms import PostForm
 import os
 # Create your views here.
@@ -74,6 +74,39 @@ class DetailView(View):
         
         return render(request, 'blog/post_detail.html', context)
 
+
+@method_decorator(login_required, name='dispatch')
+class Update(View):
+    
+    def get(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        categories = Category.objects.all()
+        form = PostForm(initial={'title': post.title, 'content': post.content, 'categories':post.categories})
+        context = {
+            'form': form,
+            'post': post,
+            'categories' : categories,
+            "title": "Blog"
+        }
+        return render(request, 'blog/post_edit.html', context)
+    
+    def post(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        form = PostForm(request.POST)
+        
+        if form.is_valid():
+            post.title = form.cleaned_data['title']
+            post.content = form.cleaned_data['content']
+            post.categories.set(form.cleaned_data['categories'])
+            post.save()
+            return redirect('blog:detail', pk=pk)
+        
+        context = {
+            'form': form,
+            "title": "Blog"
+        }
+        
+        return render(request, 'blog/post_edit.html', context)
 
 ### Upload_Image
 @login_required
