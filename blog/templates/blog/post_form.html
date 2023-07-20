@@ -33,7 +33,7 @@
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <body class="bg-gray-200">
     <div class="container mx-auto">
-        <form action="{% url 'blog:write' %}" method="post" class="input-form max-w-max mx-auto bg-white p-8 shadow-md rounded">
+        <form action="{% url 'blog:write' %}" method="post" class="input-form max-w-max mx-auto bg-white p-8 shadow-md rounded" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="title">제목</label>
@@ -46,8 +46,8 @@
             </div>
             <!-- Add input for attaching image files -->
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="image">썸네일 이미지 첨부</label>
-                <input type="file" id="image" name="image" accept="image/*">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="upload_files">썸네일 이미지 첨부</label>
+                <input type="file" id="upload_files" name="upload_files">
             </div>
             <!-- Add input field for selecting categories -->
             <div class="mb-4">

@@ -41,11 +41,12 @@ class Write(View):
         return render(request, 'blog/post_form.html', context)
     
     def post(self, request):
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         categories = Category.objects.all()
         if form.is_valid():
             post = form.save(commit=False)
             post.writer = request.user
+            post.upload_files = form.cleaned_data['upload_files']
             post.save()
             post.categories.set(form.cleaned_data['categories'])
             return redirect('blog:list')
@@ -97,12 +98,11 @@ class Update(View):
     def post(self, request, pk):
         post = get_object_or_404(Post, pk=pk)
         form = PostForm(request.POST)
-
         if form.is_valid():
             post.title = form.cleaned_data['title']
             post.content = form.cleaned_data['content']
+            post.upload_files = form.cleaned_data['upload_files']
             post.categories.set(form.cleaned_data['categories'])
-            print(post.content)
             post.save()
             return redirect('blog:detail', pk=pk)
         
