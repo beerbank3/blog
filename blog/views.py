@@ -47,6 +47,7 @@ class Write(View):
             post = form.save(commit=False)
             post.writer = request.user
             post.save()
+            post.categories.set(form.cleaned_data['categories'])
             return redirect('blog:list')
         
         context = {
