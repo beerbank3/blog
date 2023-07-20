@@ -79,9 +79,12 @@
 					<a href="{% url 'blog:edit' pk=post_id %}" class="btn-modify">
 						<span class="a11y-hidden">modify</span>
 					</a>
-					<button type="button" class="btn-delete">
-						<span class="a11y-hidden">delete</span>
-					</button>
+					<form action="{% url 'blog:delete' pk=post_id %}" method="post">
+						{% csrf_token %}
+						<button type="submit" class="btn-delete">
+							<span class="a11y-hidden">delete</span>
+						</button>
+					</form>
 				</div>
 				{% endif %}
 				<a href="./" class="btn-back">

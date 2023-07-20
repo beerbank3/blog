@@ -16,7 +16,8 @@ import os
 class Index(View):
     
     def get(self, request):
-        posts = Post.objects.prefetch_related('categories').all()
+        current_user_id = request.user.id
+        posts = Post.objects.filter(writer=current_user_id).prefetch_related('categories').all()
         context = {
             "posts": posts,
             "title": "My Blog",
@@ -112,6 +113,17 @@ class Update(View):
         }
         
         return render(request, 'blog/post_edit.html', context)
+
+
+@method_decorator(login_required, name='dispatch')
+class Delete(View):
+    
+    def post(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        post.delete()
+        return redirect('blog:list')
+    
+
 
 ### Upload_Image
 @login_required
