@@ -2,7 +2,6 @@ const form = document.querySelector('.input-form');
 const categorySelect = document.querySelector('.categories');
 const selectedCategories = new Set();
 const selectedCategoriesDiv = document.querySelector('.category');
-const existingCategories = selectedCategoriesDiv.querySelectorAll('dd');
 
 const editor = new toastui.Editor({
     el: document.querySelector('#editor'),
@@ -47,37 +46,43 @@ const uploadImages = (blob, callback) => {
     callback(error.message);
     });
 }
-existingCategories.forEach(ddTag => {
-    // categorySelect에서 해당 value를 찾아서 selectedCategories에 추가
-    const categoryOption = Array.from(categorySelect.options).find(option => option.textContent.trim() === ddTag.textContent.trim());
-    if (categoryOption) {
-        selectedCategories.add(categoryOption.value);
-
-        // Remove Button 생성
-        const removeButton = document.createElement('button');
-        removeButton.textContent = 'x';
-        removeButton.className = 'bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded';
-        removeButton.addEventListener('click', function() {
-            const categoryId = categoryOption.value;
-            selectedCategories.delete(categoryId); // 해당 카테고리 삭제 (Set에서도 삭제)
-            selectedCategoriesDiv.removeChild(ddTag); // 해당 카테고리 삭제 (화면에서 삭제)
-
-            // form으로 전달된 해당 카테고리도 삭제
-            const inputElement = document.querySelector(`input[name="categories"][value="${categoryId}"]`);
-            if (inputElement) {
-                inputElement.remove();
-            }
-        });
-
-        ddTag.appendChild(removeButton);
-
-        const inputElement = document.createElement('input');
-        inputElement.type = 'hidden';
-        inputElement.name = 'categories';
-        inputElement.value = categoryOption.value;
-        document.querySelector('form').appendChild(inputElement);
-    }
-});
+if (selectedCategoriesDiv) {
+    const existingCategories = selectedCategoriesDiv.querySelectorAll('dd');
+    existingCategories.forEach(ddTag => {
+        // categorySelect에서 해당 value를 찾아서 selectedCategories에 추가
+        const categoryOption = Array.from(categorySelect.options).find(option => option.textContent.trim() === ddTag.textContent.trim());
+        if (categoryOption) {
+            selectedCategories.add(categoryOption.value);
+    
+            // Remove Button 생성
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'x';
+            removeButton.className = 'bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded';
+            removeButton.addEventListener('click', function() {
+                const categoryId = categoryOption.value;
+                selectedCategories.delete(categoryId); // 해당 카테고리 삭제 (Set에서도 삭제)
+                selectedCategoriesDiv.removeChild(ddTag); // 해당 카테고리 삭제 (화면에서 삭제)
+    
+                // form으로 전달된 해당 카테고리도 삭제
+                const inputElement = document.querySelector(`input[name="categories"][value="${categoryId}"]`);
+                if (inputElement) {
+                    inputElement.remove();
+                }
+            });
+    
+            ddTag.appendChild(removeButton);
+    
+            const inputElement = document.createElement('input');
+            inputElement.type = 'hidden';
+            inputElement.name = 'categories';
+            inputElement.value = categoryOption.value;
+            document.querySelector('form').appendChild(inputElement);
+        }
+    });
+    // ddElements를 사용하여 원하는 작업을 수행합니다.
+} else {
+    // selectedCategoriesDiv가 null인 경우에 대한 예외 처리를 수행합니다.
+}
 categorySelect.addEventListener('change', function() {
     const selectedCategory = categorySelect.options[categorySelect.selectedIndex];
     if (selectedCategory.value !== '') {
@@ -120,20 +125,6 @@ categorySelect.addEventListener('change', function() {
 });
 
 form.addEventListener('submit', (e) => {
-    e.preventDefault(); // 기본 폼 제출 동작 방지
-  
-    const formData = new FormData(form); // 폼 데이터 생성
-    formData.append('content',editor.getMarkdown());
-  
-    fetch(form.action, {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-      window.location.href = '/blog';
-    })
-    .catch(error => {
-      console.error('업로드 실패:', error);
-    });
+    const contentInput = document.querySelector('.contentInput');
+    contentInput.value = (typeof editor.getMarkdown() !== 'undefined') ? editor.getMarkdown() : '';
 });

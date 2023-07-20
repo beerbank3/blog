@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, redirect, get_object_or_404
 from django.views import View
 from django.http import JsonResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
@@ -27,20 +26,23 @@ class Index(View):
 
 ### Write
 @method_decorator(login_required, name='dispatch')
-class Write(LoginRequiredMixin, View):
+class Write(View):
     
     def get(self, request):
         user = request.user
+        categories = Category.objects.all()
         form = PostForm()
         context = {
-            'form': form,
+            "form": form,
             "title": "Blog",
-            "user": user
+            "user": user,
+            "categories" : categories
         }
         return render(request, 'blog/post_form.html', context)
     
     def post(self, request):
         form = PostForm(request.POST)
+        categories = Category.objects.all()
         if form.is_valid():
             post = form.save(commit=False)
             post.writer = request.user
@@ -48,7 +50,8 @@ class Write(LoginRequiredMixin, View):
             return redirect('blog:list')
         
         context = {
-            'form': form
+            'form': form,
+            "categories" : categories
         }
         
         return render(request, 'blog/post_form.html', context)
@@ -93,11 +96,12 @@ class Update(View):
     def post(self, request, pk):
         post = get_object_or_404(Post, pk=pk)
         form = PostForm(request.POST)
-        
+
         if form.is_valid():
             post.title = form.cleaned_data['title']
             post.content = form.cleaned_data['content']
             post.categories.set(form.cleaned_data['categories'])
+            print(post.content)
             post.save()
             return redirect('blog:detail', pk=pk)
         

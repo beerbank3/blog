@@ -41,7 +41,29 @@
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="content">내용</label>
+                <textarea name="content" class="contentInput" hidden></textarea>
                 <div id="editor"></div>
+            </div>
+            <!-- Add input for attaching image files -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="image">썸네일 이미지 첨부</label>
+                <input type="file" id="image" name="image" accept="image/*">
+            </div>
+            <!-- Add input field for selecting categories -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="category">카테고리</label>
+                <select id="categories" class="categories">
+                    <option value="" selected disabled>카테고리 선택</option>
+                    {% for category in categories %}
+                        <option value="{{ category.pk }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+                <dl class="category">
+                    <dt class="a11y-hidden">Category</dt>
+                    {% for category in post.categories.all %}
+                        <dd>{{category}}</dd>
+                    {% endfor %}
+                </dl>
             </div>
             <div class="flex items-center justify-end"> <!-- 수정된 부분 -->
                 <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 mr-4" href="/blog"> <!-- 수정된 부분 -->
