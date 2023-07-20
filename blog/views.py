@@ -98,10 +98,12 @@ class Update(View):
     
     def post(self, request, pk):
         post = get_object_or_404(Post, pk=pk)
-        form = PostForm(request.POST, request.FILES)
+        form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post.title = form.cleaned_data['title']
             post.content = form.cleaned_data['content']
+            if not request.FILES.get('upload_files'):
+                form.cleaned_data['upload_files'] = post.upload_files
             post.upload_files = form.cleaned_data['upload_files']
             post.categories.set(form.cleaned_data['categories'])
             post.save()
