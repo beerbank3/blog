@@ -29,20 +29,18 @@
 {% endblock %}
 
 {% block content %}
-<body class="bg-gray-200">
-    <div class="container mx-auto">
-        <form action="{% url 'user:register' %}" method="post" class="max-w-3xl mx-auto mt-8 p-4 bg-gray-300 shadow-md rounded space-y-8">
-            {% csrf_token %}
-            <h2 class="text-2xl mb-4 font-bold">회원가입</h2>
+<div class="container mx-auto">
+    <form action="{% url 'user:register' %}" method="post" class="max-w-3xl mx-auto mt-8 p-4 bg-gray-300 shadow-md rounded space-y-8">
+        {% csrf_token %}
+        <h2 class="text-2xl mb-4 font-bold">회원가입</h2>
 
-            {{ form.as_p }}
+        {{ form.as_p }}
 
-            <div class="flex items-center justify-between mt-6">
-                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                가입하기
-                </button>
-            </div>
-        </form>
-    </div>
-</body>
+        <div class="flex items-center justify-between mt-6">
+            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+            가입하기
+            </button>
+        </div>
+    </form>
+</div>
 {% endblock %}

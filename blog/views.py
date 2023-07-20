@@ -61,7 +61,6 @@ class Write(View):
     
 
 ### Detail
-@method_decorator(login_required, name='dispatch')
 class DetailView(View):
     
     def get(self, request, pk):

@@ -32,3 +32,19 @@
 │     └─📁 user/
 └─📁 venv/
 ```
+
+## 페이지
+메인 페이지
+![main](/README/main.png)
+
+로그인후 페이지
+![main-blog](/README/main-blog.png)
+
+로그인, 회원가입
+![login](/README/login.png)
+![register](/README/register.png)
+
+글쓰기
+![write](/README/write.png)
+![detail](/README/detail.png)
+![edit](/README/edit.png)
