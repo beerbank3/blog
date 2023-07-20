@@ -43,207 +43,46 @@
 	<div class="max-width">
 		<h2 class="a11y-hidden">Post</h2>
 		<ul class="posts">
+			{% for post in posts %}
 			<li>
-				<a href="post-view.html" class="post">
+				<a href="/blog/detail/{{ post.pk }}" class="post">
 					<article>
-						<img src="{% static 'images/post-img6.jpg' %}" alt="" />
+						{% if post.upload_files %}
+							<img src="/blog/media/{{ post.upload_files }}" alt="" />
+						{% else %}
+							<img src="/static/assets/Thumnail.png" alt="" />
+						{% endif %}
 						<div class="contents-wrap">
 							<!-- category -->
 							<dl class="category">
 								<dt class="a11y-hidden">Category</dt>
-								<dd>Life</dd>
-								<dd>Style</dd>
+								{% for category in post.categories.all %}
+									<dd>{{category}}</dd>
+								{% endfor %}
 							</dl>
 							<!-- //category -->
 
-							<h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit</h3>
+							<h3>{{ post.title }}</h3>
 
 							<!-- author -->
 							<dl class="author-wrap">
 								<dt class="a11y-hidden">Author</dt>
-								<dd class="author"><img src="./images/profile.jpg" alt="" /> Chilli</dd>
+								<dd class="author"><img src="/blog/media/{{post.writer.profile_image}}" alt="" />{{post.writer}}</dd>
 								<dt class="a11y-hidden">Created</dt>
-								<dd class="created">2022.05.25</dd>
+								<dd class="created">{{post.created_at}}</dd>
 							</dl>
 							<!-- //author -->
 
+							{% comment %}
 							<p class="post-description">
-								Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est
-								facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta
-								corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore
-								illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum
-								dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis
-								dolor quas odio cum incidunt repudiandae vel."
+								{{ post.content }}
 							</p>
+							{% endcomment %}
 						</div>
 					</article>
 				</a>
 			</li>
-			<li>
-				<a href="post-view.html" class="post">
-					<article>
-						<img src="./images/post-img5.jpg" alt="" />
-						<div class="contents-wrap">
-							<!-- category -->
-							<dl class="category">
-								<dt class="a11y-hidden">Category</dt>
-								<dd>Life</dd>
-								<dd>Style</dd>
-							</dl>
-							<!-- //category -->
-
-							<h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit</h3>
-
-							<dl class="author-wrap">
-								<dt class="a11y-hidden">Author</dt>
-								<dd class="author"><img src="./images/profile.jpg" alt="" /> Chilli</dd>
-								<dt class="a11y-hidden">Created</dt>
-								<dd class="created">2022.05.25</dd>
-							</dl>
-							<p class="post-description">
-								Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est
-								facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta
-								corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore
-								illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum
-								dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis
-								dolor quas odio cum incidunt repudiandae vel."
-							</p>
-						</div>
-					</article>
-				</a>
-			</li>
-			<li>
-				<a href="post-view.html" class="post">
-					<article>
-						<img src="./images/post-img4.jpg" alt="" />
-						<div class="contents-wrap">
-							<!-- category -->
-							<dl class="category">
-								<dt class="a11y-hidden">Category</dt>
-								<dd>Life</dd>
-								<dd>Style</dd>
-							</dl>
-							<!-- //category -->
-
-							<h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit</h3>
-
-							<dl class="author-wrap">
-								<dt class="a11y-hidden">Author</dt>
-								<dd class="author"><img src="./images/profile.jpg" alt="" /> Chilli</dd>
-								<dt class="a11y-hidden">Created</dt>
-								<dd class="created">2022.05.25</dd>
-							</dl>
-							<p class="post-description">
-								Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est
-								facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta
-								corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore
-								illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum
-								dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis
-								dolor quas odio cum incidunt repudiandae vel."
-							</p>
-						</div>
-					</article>
-				</a>
-			</li>
-			<li>
-				<a href="post-view.html" class="post">
-					<article>
-						<img src="./images/post-img3.jpg" alt="" />
-						<div class="contents-wrap">
-							<!-- category -->
-							<dl class="category">
-								<dt class="a11y-hidden">Category</dt>
-								<dd>Life</dd>
-								<dd>Style</dd>
-							</dl>
-							<!-- //category -->
-
-							<h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit</h3>
-
-							<dl class="author-wrap">
-								<dt class="a11y-hidden">Author</dt>
-								<dd class="author"><img src="./images/profile.jpg" alt="" /> Chilli</dd>
-								<dt class="a11y-hidden">Created</dt>
-								<dd class="created">2022.05.25</dd>
-							</dl>
-							<p class="post-description">
-								Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est
-								facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta
-								corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore
-								illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum
-								dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis
-								dolor quas odio cum incidunt repudiandae vel."
-							</p>
-						</div>
-					</article>
-				</a>
-			</li>
-			<li>
-				<a href="post-view.html" class="post">
-					<article>
-						<img src="./images/post-img2.jpg" alt="" />
-						<div class="contents-wrap">
-							<!-- category -->
-							<dl class="category">
-								<dt class="a11y-hidden">Category</dt>
-								<dd>Life</dd>
-								<dd>Style</dd>
-							</dl>
-							<!-- //category -->
-
-							<h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit</h3>
-
-							<dl class="author-wrap">
-								<dt class="a11y-hidden">Author</dt>
-								<dd class="author"><img src="./images/profile.jpg" alt="" /> Chilli</dd>
-								<dt class="a11y-hidden">Created</dt>
-								<dd class="created">2022.05.25</dd>
-							</dl>
-							<p class="post-description">
-								Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est
-								facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta
-								corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore
-								illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum
-								dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis
-								dolor quas odio cum incidunt repudiandae vel."
-							</p>
-						</div>
-					</article>
-				</a>
-			</li>
-			<li>
-				<a href="post-view.html" class="post">
-					<article>
-						<img src="./images/post-img1.jpg" alt="" />
-						<div class="contents-wrap">
-							<!-- category -->
-							<dl class="category">
-								<dt class="a11y-hidden">Category</dt>
-								<dd>Life</dd>
-								<dd>Style</dd>
-							</dl>
-							<!-- //category -->
-
-							<h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit</h3>
-
-							<dl class="author-wrap">
-								<dt class="a11y-hidden">Author</dt>
-								<dd class="author"><img src="{% static 'images/profile.jpg' %}" alt="" /> Chilli</dd>
-								<dt class="a11y-hidden">Created</dt>
-								<dd class="created">2022.05.25</dd>
-							</dl>
-							<p class="post-description">
-								Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est
-								facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta
-								corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore
-								illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis dolor quas odio cum incidunt repudiandae vel. Lorem ipsum
-								dolor sit amet consectetur, adipisicing elit. Inventore illum nostrum perferendis voluptas, voluptate soluta corrupti dolore quidem. Placeat, eaque! Exercitationem est facilis
-								dolor quas odio cum incidunt repudiandae vel."
-							</p>
-						</div>
-					</article>
-				</a>
-			</li>
+			{% endfor %}
 		</ul>
 		<!-- //posts -->
 	</div>
