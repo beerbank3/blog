@@ -40,11 +40,14 @@
 로그인후 페이지
 ![main-blog](/README/main-blog.png)
 
-로그인, 회원가입
+- 로그인
 ![login](/README/login.png)
+- 회원가입
 ![register](/README/register.png)
 
-글쓰기
+- 글쓰기
 ![write](/README/write.png)
+- 상세페이지
 ![detail](/README/detail.png)
+- 수정
 ![edit](/README/edit.png)
