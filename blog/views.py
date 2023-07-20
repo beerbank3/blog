@@ -87,7 +87,7 @@ class Update(View):
     def get(self, request, pk):
         post = get_object_or_404(Post, pk=pk)
         categories = Category.objects.all()
-        form = PostForm(initial={'title': post.title, 'content': post.content, 'categories':post.categories})
+        form = PostForm(initial={'title': post.title, 'content': post.content, 'upload_files':post.upload_files,'categories':post.categories})
         context = {
             'form': form,
             'post': post,
@@ -98,7 +98,7 @@ class Update(View):
     
     def post(self, request, pk):
         post = get_object_or_404(Post, pk=pk)
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post.title = form.cleaned_data['title']
             post.content = form.cleaned_data['content']

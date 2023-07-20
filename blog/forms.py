@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post
+from .models import Post, Category
 
 
 class PostForm(forms.ModelForm):
@@ -7,7 +7,11 @@ class PostForm(forms.ModelForm):
     title = forms.CharField(required=True)
     content = forms.CharField(required=True)
     upload_files = forms.FileField(required=False)
-    categories = forms.CharField(required=False)
+    categories = forms.MultipleChoiceField(
+        choices=Category.objects.all().values_list('id', 'name'),  # 카테고리 선택지를 가져와 사용
+        widget=forms.MultipleHiddenInput,
+        required=False
+    )
 
     class Meta:
         model = Post
