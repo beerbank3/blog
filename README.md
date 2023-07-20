@@ -10,22 +10,23 @@
 
 ## 프로젝트 구조
 📁 app/
-📁 blog/
-  📁 migrations/
-  📁 templates/
-    📁 blog/
-📁 media/
-  📁 image/
-  📁 images/
-  📁 profile_images/
-📁 README/
-📁 static/
-  📁 assets/
-  📁 css/
-  📁 images/
-  📁 js/
-📁 templates/
-📁 user/
-  📁 migrations/
-  📁 templates/
-    📁 user/
+├─📁 blog/
+│  ├─📁 migrations/
+│  └─📁 templates/
+│    └─📁 blog/
+├─📁 media/
+│  ├─📁 image/
+│  ├─📁 images/
+│  └─📁 profile_images/
+├─📁 README/
+├─📁 static/
+│  ├─📁 assets/
+│  ├─📁 css/
+│  ├─📁 images/
+│  └─📁 js/
+├─📁 templates/
+├─📁 user/
+│  ├─📁 migrations/
+│  └─📁 templates/
+│     └─📁 user/
+└─📁 venv/
