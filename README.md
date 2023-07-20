@@ -34,14 +34,17 @@
 ```
 
 ## 페이지
-- 메인 페이지
-<img src="/README/main.png" width="45%">
+메인 페이지
+![main](/README/main.png)
 
-- 로그인후 페이지
-<img src="/README/main-blog.png" width="45%">
+로그인후 페이지
+![main-blog](/README/main-blog.png)
 
-- 로그인, 회원가입
-<img src="/README/login.png" width="45%"> <img src="/README/register.png" width="45%">
+로그인, 회원가입
+![login](/README/login.png)
+![register](/README/register.png)
 
-- 글쓰기
-<img src="/README/write.png" width="33%"> <img src="/README/detail.png" width="33%"> <img src="/README/edit.png" width="33%">
+글쓰기
+![write](/README/write.png)
+![detail](/README/detail.png)
+![edit](/README/edit.png)
