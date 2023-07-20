@@ -15,7 +15,7 @@
 		<header>
 			<div class="max-width">
 				<h1>
-					<a href="/blog">
+					<a href="/">
 						<img src="{% static 'assets/Logo.svg' %}" alt="Travel Blog" />
 					</a>
 				</h1>
@@ -23,7 +23,7 @@
 					{% if user.is_authenticated %}
 					<!-- 프로필 이미지 -->
 					<li class="profile-img">
-						<a href="#">
+						<a href="/blog">
 							<img src="/blog/media/{{ user.profile_image }}" alt="My Page" />
 						</a>
 					</li>

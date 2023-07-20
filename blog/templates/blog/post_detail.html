@@ -104,8 +104,7 @@
 	const viewer = new toastui.Editor({
 		el: document.querySelector('.viewer'),
 		viewer: true,
-		initialValue: '{{ post_content }}'
+		initialValue: '{{ post_content|escapejs }}'
 	});
 </script>
-{% comment %} <script src="{% static 'js/detail.js' %}"></script> {% endcomment %}
 {% endblock %}

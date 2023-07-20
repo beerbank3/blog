@@ -82,7 +82,7 @@
 <!-- TOAST UI Editor CDN URL(JS) -->
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script>
-let content = '{{post.content}}'
+let content = '{{ post.content|escapejs }}'
 </script>    
 <script src="{% static 'js/form.js' %}"></script>    
 {% endblock %}
