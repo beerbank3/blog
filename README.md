@@ -65,7 +65,7 @@ categories = models.ManyToManyField(Category)
 ```
 ![category_form](/README/category_form.png)
 
-**write code**
+**write code**  
 ![write_code](/README/write_code.png)
-**forms code**
+**forms code**  
 ![forms_code](/README/forms_code.png)
