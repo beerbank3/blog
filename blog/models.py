@@ -14,7 +14,7 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=30)
     content = models.TextField()
-    writer = models.ForeignKey(User, on_delete=models.CASCADE) #에러발생부분
+    writer = models.ForeignKey(User, on_delete=models.CASCADE)
     upload_files = models.ImageField(upload_to="image/", null=True)
     categories = models.ManyToManyField(Category)
     created_at = models.DateTimeField(auto_now_add=True)

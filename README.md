@@ -51,3 +51,20 @@
 ![detail](/README/detail.png)
 - 수정
 ![edit](/README/edit.png)
+
+## 오류 수정
+- 유저 이름이라서 return Null 오류
+![user_str](/README/user_str.png)
+
+- toast ui editor initialValue사용시 개행이 있으면 값이안나옴
+![toast error](/README/toast_error.png)
+
+- 카테고리 오류
+```
+categories = models.ManyToManyField(Category)
+```
+![category_form](/README/category_form.png)
+
+![write_code](/README/write_code.png)
+
+![forms_code](/README/forms_code.png)
