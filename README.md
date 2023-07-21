@@ -56,6 +56,35 @@
 - 유저 이름이라서 return Null 오류  
 ![user_str](/README/user_str.png)
 
+- form 제출 형태 변경  
+```
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    formData.append('content',editor.getMarkdown());
+
+    fetch('/blog/write/', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+      console.log('업로드 완료:', data);
+    })
+    .catch(error => {
+      console.error('업로드 실패:', error);
+    });
+});
+```
+
+```
+form.addEventListener('submit', (e) => {
+    const contentInput = document.querySelector('.contentInput');
+    contentInput.value = (typeof editor.getMarkdown() !== 'undefined') ? editor.getMarkdown() : '';
+});
+```
+
 - toast ui editor initialValue사용시 개행이 있으면 값이안나옴  
 ![toast error](/README/toast_error.png)
 
