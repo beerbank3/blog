@@ -36,10 +36,10 @@
 ## 번역 ❌
 - 번역 기능은 구현되지 않음
 
-## 데이터베이스 모델링
+# 데이터베이스 모델링
 ![ERD](/README/ERD.png)
 
-## 프로젝트 구조
+# 프로젝트 구조
 ```
 📁 app/
 ├─📁 blog/
@@ -64,7 +64,7 @@
 └─📁 venv/
 ```
 
-## 페이지
+# 페이지
 메인 페이지
 ![main](/README/main.png)
 
@@ -83,7 +83,7 @@
 - 수정
 ![edit](/README/edit.png)
 
-## 오류 수정
+# 오류 수정
 - 유저 이름이라서 return Null 오류  
 ![user_str](/README/user_str.png)
 
