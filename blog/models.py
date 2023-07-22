@@ -11,11 +11,13 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
+    
 class Post(models.Model):
     title = models.CharField(max_length=30)
     content = models.TextField()
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
     upload_files = models.ImageField(upload_to="image/", null=True)
+    views = models.IntegerField(default=0)
     categories = models.ManyToManyField(Category)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

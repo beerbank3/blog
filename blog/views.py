@@ -65,13 +65,15 @@ class DetailView(View):
     
     def get(self, request, pk):
         post = Post.objects.prefetch_related('categories').get(pk=pk)
-        
+        post.views += 1
+        post.save()
         context = {
             "title": "Blog Detail",
             'post_id': pk,
             'post_title': post.title,
             'post_writer': post.writer,
             'post_content': post.content,
+            'post_views': post.views,
             'post_uploadfiles': post.upload_files,
             'post_categories' : post.categories.all(),
             'post_created_at': post.created_at.strftime('%Y-%m-%d')
