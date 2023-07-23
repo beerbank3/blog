@@ -6,7 +6,7 @@ from django.utils.decorators import method_decorator
 from django.conf import settings
 from os.path import relpath
 from .models import Post, Category, UploadImage
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 import os
 # Create your views here.
 
@@ -125,7 +125,24 @@ class Delete(View):
         post = get_object_or_404(Post, pk=pk)
         post.delete()
         return redirect('blog:list')
-    
+
+
+def new_comment(request, pk):
+    if request.user.is_authenticated:
+        post = Post.objects.get(pk=pk)
+        if request.method == 'POST':
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                # commit=False를 하면, DB에 바로 저장되지 않습니다.
+                # 대신, 메모리에 Comment 객체를 하나 생성해 줍니다.
+                comment = form.save(commit=False)
+                comment.post = post
+                comment.author = request.user
+                comment.save()
+                return redirect(comment.get_absolute_url())
+        else:
+            form = CommentForm()
+        return render(request, 'blog/comment_form.html', {'form': form})
 
 
 ### Upload_Image

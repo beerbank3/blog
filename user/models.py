@@ -33,7 +33,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True, max_length=255)
-    name = models.CharField(max_length=50, null=True, blank=True)
+    name = models.CharField(max_length=50, null=True, blank=True, unique=True)
     profile_image = models.ImageField(upload_to='profile_images/', null=True)
     categories = models.ManyToManyField('blog.Category')
     is_staff = models.BooleanField(default=False)
@@ -48,7 +48,7 @@ class User(AbstractUser):
     
     objects = UserManager()
     
-    def __str__(self):
+    def __str__(self): # 수정해야됨 모델에서 이런작업은 안좋을수있음
         if(self.name):
             return self.name
         else:
