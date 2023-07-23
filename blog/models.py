@@ -26,6 +26,24 @@ class Post(models.Model):
         return self.title
     
 
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    writer = models.ForeignKey('user.User', on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return f'[{self.post}] {self.content} :: {self.writer}'
+
+    def get_absolute_url(self):
+        return f'/blog/{self.post.pk}/#comment-{self.pk}'
+
+    class Meta:
+        ordering = ['-id']
+
+
+
 class UploadImage(models.Model):
     image = models.ImageField(upload_to='images/')
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
