@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
 from os.path import relpath
-from .models import Post, Category, UploadImage
+from .models import Post, Category, UploadImage, User
+from .decorators import log_action
 from .forms import PostForm, CommentForm
 import os
 # Create your views here.
@@ -13,6 +14,7 @@ import os
 
 ### Post
 @method_decorator(login_required, name='dispatch')
+@method_decorator(log_action(action='Index'), name='dispatch')
 class Index(View):
     
     def get(self, request):
@@ -27,6 +29,7 @@ class Index(View):
 
 ### Write
 @method_decorator(login_required, name='dispatch')
+@method_decorator(log_action(action='Post_Write'),name='dispatch')
 class Write(View):
     
     def get(self, request):
@@ -61,10 +64,16 @@ class Write(View):
     
 
 ### Detail
+@method_decorator(log_action(action='Post_View'),name='dispatch')
 class DetailView(View):
     
     def get(self, request, pk):
         post = Post.objects.prefetch_related('categories').get(pk=pk)
+        user_profile = User.objects.get(user=request.user)
+    
+        # 이미 게시글을 읽은 경우 중복 추가하지 않음
+        if post not in user_profile.post_views.all():
+            user_profile.post_views.add(post)
         post.views += 1
         post.save()
         context = {
@@ -83,6 +92,7 @@ class DetailView(View):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(log_action(action='Post_Update'),name='dispatch')
 class Update(View):
     
     def get(self, request, pk):
@@ -119,6 +129,7 @@ class Update(View):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(log_action(action='Post_Delete'),name='dispatch')
 class Delete(View):
     
     def post(self, request, pk):
@@ -127,6 +138,8 @@ class Delete(View):
         return redirect('blog:list')
 
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(log_action(action='Comment_Write'),name='dispatch')
 def new_comment(request, pk):
     if request.user.is_authenticated:
         post = Post.objects.get(pk=pk)
@@ -147,6 +160,7 @@ def new_comment(request, pk):
 
 ### Upload_Image
 @login_required
+@method_decorator(log_action(action='Upload_image'),name='dispatch')
 def upload_image(request):
     if request.method == 'POST' and request.FILES.get('images'):
         image_file = request.FILES['images']

@@ -1,7 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils import timezone
+import string, random
 # Create your models here.
+
+def generate_random_string(length):
+    letters = string.ascii_letters
+    return ''.join(random.choice(letters) for i in range(length))
+
+
 class UserManager(BaseUserManager):
     
     def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
@@ -33,9 +40,10 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True, max_length=255)
-    name = models.CharField(max_length=50, null=True, blank=True, unique=True)
+    name = models.CharField(max_length=50, default='guest_' + generate_random_string(8), unique=True)
     profile_image = models.ImageField(upload_to='profile_images/', null=True)
     categories = models.ManyToManyField('blog.Category')
+    post_views = models.ManyToManyField('blog.Post')
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -48,8 +56,5 @@ class User(AbstractUser):
     
     objects = UserManager()
     
-    def __str__(self): # 수정해야됨 모델에서 이런작업은 안좋을수있음
-        if(self.name):
-            return self.name
-        else:
-            return self.email
+    def __str__(self):
+        return self.name
