@@ -5,7 +5,7 @@ import string, random
 # Create your models here.
 
 def generate_random_string(length):
-    letters = string.ascii_letters
+    letters = string.digits
     return ''.join(random.choice(letters) for i in range(length))
 
 

@@ -14,9 +14,9 @@ import os
 
 ### Post
 @method_decorator(login_required, name='dispatch')
-@method_decorator(log_action(action='Index'), name='dispatch')
+@method_decorator(log_action(action='Index'), name='get')
 class Index(View):
-    
+
     def get(self, request):
         current_user_id = request.user.id
         posts = Post.objects.filter(writer=current_user_id).prefetch_related('categories').all()
@@ -69,7 +69,7 @@ class DetailView(View):
     
     def get(self, request, pk):
         post = Post.objects.prefetch_related('categories').get(pk=pk)
-        user_profile = User.objects.get(user=request.user)
+        user_profile = request.user
     
         # 이미 게시글을 읽은 경우 중복 추가하지 않음
         if post not in user_profile.post_views.all():
