@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
-from blog2.models import Post
+from blog.models import Post
 
 
 ### index
