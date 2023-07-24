@@ -30,6 +30,9 @@
 - 대댓글
   - 권한 : 로그인
 
+## 로그 
+- 액션, 시간, Post, User
+- User가 읽은 Post 체크
 ## 정적파일(collectstatic) ❌
 - 정적 파일들을 서버에서 모아서 제공하는 기능
 
@@ -133,6 +136,7 @@ categories = models.ManyToManyField(Category)
 
 **forms code 에러**
 - 데이터베이스 삭제직후 에러 발생
+
 문제의 blog.forms 코드
 ```
 categories = forms.MultipleChoiceField(
@@ -153,6 +157,6 @@ django.db.utils.OperationalError: no such table: blog_category
 
 데이터베이스를 생성한뒤에는 migrate이 정상적으로 작동되나 데이터베이스 삭제직후 에러 발생
 
-테이블이 생성되기 전 모델에 대한 데이터를 조회하면서 에러가 나는것으로 예상됩니다.
+테이블이 생성되기 전 모델에 대한 데이터를 조회하면서 에러가 나는것으로 예상
 
 해결방법: 문제의 코드를 주석처리후 migrate완료후 주석 제거
