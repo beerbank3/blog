@@ -130,3 +130,29 @@ categories = models.ManyToManyField(Category)
 
 **forms code**  
 ![forms_code](/README/forms_code.png)
+
+**forms code 에러**
+- 데이터베이스 삭제직후 에러 발생
+문제의 blog.forms 코드
+```
+categories = forms.MultipleChoiceField(
+    choices=Category.objects.all().values_list('id', 'name'),  # 카테고리 선택지를 가져와 사용
+    widget=forms.MultipleHiddenInput,
+    required=False
+)
+```
+해당 코드떄문에 데이터베이스를 삭제하고 난뒤 
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+위의 명령어 사용시 아래 오류 표출
+```
+django.db.utils.OperationalError: no such table: blog_category
+```
+
+데이터베이스를 생성한뒤에는 migrate이 정상적으로 작동되나 데이터베이스 삭제직후 에러 발생
+
+테이블이 생성되기 전 모델에 대한 데이터를 조회하면서 에러가 나는것으로 예상됩니다.
+
+해결방법: 문제의 코드를 주석처리후 migrate완료후 주석 제거
