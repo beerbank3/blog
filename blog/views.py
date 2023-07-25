@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
+from django.core.paginator import Paginator
+from django.db.models import Q
 from .models import Post, Category, UploadImage, User
 from .decorators import log_action
 from .forms import PostForm, CommentForm
@@ -19,11 +21,28 @@ class Index(View):
 
 
     def get(self, request):
+        category_name = request.GET.get('category', None)
+        page_number = int(request.GET.get('page', 1))
         current_user_id = request.user.id
-        posts = Post.objects.filter(writer=current_user_id).prefetch_related('categories').all()
+        q = Q(is_deleted=False)
+        q &=Q(writer=current_user_id)
+        if category_name:
+            q &= Q(categories__name=category_name)
+        
+        posts = Post.objects.filter(q).prefetch_related('categories').all()
+
+        paginator = Paginator(posts , 6)
+
+        if not page_number:
+            page_number = 1
+
+        page = paginator.get_page(page_number)
+        categories = Category.objects.all()
+
         context = {
-            "posts": posts,
+            "posts": page,
             "title": "My Blog",
+            "categories" : categories,
         }
         return render(request, 'blog/index.html', context)
     

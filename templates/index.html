@@ -43,6 +43,13 @@
 <main>
 	<!-- posts -->
 	<div class="max-width">
+		<dl class="category">
+			<dt class="a11y-hidden">Category</dt>
+			<dd><a href="/">All</a></dd>
+			{% for category in categories.all %}
+				<dd><a href="/?category={{category}}">{{category}}</a></dd>
+			{% endfor %}
+		</dl>
 		<h2 class="a11y-hidden">Post</h2>
 		<ul class="posts">
 			{% for post in posts %}
