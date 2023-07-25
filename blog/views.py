@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect, redirect, get_object_or_404
 from django.views import View
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils.decorators import method_decorator
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .models import Post, Category, UploadImage, User
+from .models import Post, Category, UploadImage, User, Comment
 from .decorators import log_action
 from .forms import PostForm, CommentForm
 from os.path import relpath
@@ -96,6 +97,8 @@ class DetailView(View):
             user_profile.post_views.add(post)
         post.views += 1
         post.save()
+        comments = Comment.objects.filter(post_id=pk).order_by('created_at').all()
+
         context = {
             "title": "Blog Detail",
             'post_id': pk,
@@ -105,7 +108,8 @@ class DetailView(View):
             'post_views': post.views,
             'post_uploadfiles': post.upload_files,
             'post_categories' : post.categories.all(),
-            'post_created_at': post.created_at.strftime('%Y-%m-%d')
+            'post_created_at': post.created_at.strftime('%Y-%m-%d'),
+            'comments':comments
         }
         
         return render(request, 'blog/post_detail.html', context)
@@ -158,26 +162,48 @@ class Delete(View):
         return redirect('blog:list')
 
 
+### Comment
 @method_decorator(login_required, name='dispatch')
 @method_decorator(log_action(action='Comment_Write'),name='dispatch')
-def new_comment(request, pk):
-    if request.user.is_authenticated:
-        post = Post.objects.get(pk=pk)
-        if request.method == 'POST':
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                # commit=False를 하면, DB에 바로 저장되지 않습니다.
-                # 대신, 메모리에 Comment 객체를 하나 생성해 줍니다.
-                comment = form.save(commit=False)
-                comment.post = post
-                comment.author = request.user
-                comment.save()
-                return redirect(comment.get_absolute_url())
-        else:
-            form = CommentForm()
-        return render(request, 'blog/comment_form.html', {'form': form})
+class CommentWrite(View):
+
+    def post(self, request, pk):
+        form = CommentForm(request.POST)
+        post = get_object_or_404(Post, pk=pk)
+
+        if form.is_valid():
+            content = form.cleaned_data['content']
+            writer = request.user
+
+            try:
+                comment = Comment.objects.create(post=post, content=content, writer=writer)
+            except ObjectDoesNotExist as e:
+                print('Post does not exist.', str(e))
+            except ValidationError as e:
+                print('Valdation error occurred', str(e))
+            
+            return redirect('blog:detail', pk=pk)
+        
+        context = {
+            "title": "Blog",
+            'post_id': pk,
+            'comments': post.comment_set.all(),
+            'comment_form': form,
+        }
+        return render(request, 'blog/post_detail.html', context)
 
 
+class CommentDelete(View):
+    
+    def post(self, request, pk):
+        comment = get_object_or_404(Comment, pk=pk)
+        
+        post_id = comment.post.id
+
+        comment.delete()
+        
+        return redirect('blog:detail', pk=post_id)
+    
 ### Upload_Image
 @login_required
 @method_decorator(log_action(action='Upload_image'),name='dispatch')
