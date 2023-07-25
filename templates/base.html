@@ -27,6 +27,12 @@
 							<img src="/blog/media/{{ user.profile_image }}" alt="My Page" />
 						</a>
 					</li>
+					<!-- 유저 정보 수정 -->
+					<li>
+						<a href="{% url 'user:update' %}" class="button white">
+							<span>Update</span>
+						</a>
+					</li>
 					<!-- 글쓰기 -->
 					<li>
 						<a href="{% url 'blog:write' %}" class="button">

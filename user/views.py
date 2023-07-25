@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
 
 # from .models import User
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, UserProfileForm
+from blog.models import Category
 
 ### Registration
 class Registration(View):
@@ -69,3 +70,31 @@ class Logout(View):
     def get(self, request):
         logout(request)
         return redirect('/')
+    
+
+class ProfileUpdate(View):
+
+    def get(self, request):
+        categories = Category.objects.all()
+    
+        user = request.user
+        form = UserProfileForm()
+        context = {
+            'form': form,
+            "title": f"{user.name} Profile",
+            'user': user,
+            "categories" : categories
+        }
+        return render(request, 'user/user_update.html', context)
+
+    def post(self, request):
+        user = request.user
+        form = UserProfileForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            user.name = form.cleaned_data.get('name')
+            user.content = form.cleaned_data.get('content')
+            user.profile_image = form.cleaned_data.get('profile_image')
+            user.categories.set(form.cleaned_data['categories'])
+            user.save()
+            
+            return redirect('blog:list')

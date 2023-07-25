@@ -40,6 +40,7 @@ class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True, max_length=255)
     name = models.CharField(max_length=50, default='guest_' + generate_random_string(8), unique=True)
+    content = models.TextField(null=True)
     profile_image = models.ImageField(upload_to='profile_images/', null=True)
     categories = models.ManyToManyField('blog.Category')
     post_views = models.ManyToManyField('blog.Post')

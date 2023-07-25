@@ -47,7 +47,7 @@
 			<h2>About Me</h2>
 			<img src="/blog/media/{{ user.profile_image }}" alt="" class="user-profile" />
 			<p class="user-name">{{ user }}</p>
-			<p class="user-description">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+			<p class="user-description">{{user.content}}</p>
 			<h3>Categories</h3>
 			<ul class="categories">
 			{% for category in user.categories.all %}
