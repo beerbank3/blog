@@ -23,6 +23,8 @@
 <link rel="stylesheet" href="{% static 'css/post.css' %}" />
 <link rel="stylesheet" href="{% static 'css/posts.css' %}" />
 <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+
+<link rel="stylesheet" href="{% static 'css/paginations.css' %}" />
 {% endblock %}
 
 {% block content %}
@@ -86,5 +88,35 @@
 		</ul>
 		<!-- //posts -->
 	</div>
+	<!-- 페이지네이션 링크 -->
+	<div class="pagination mt-4 flex justify-center">
+		<nav class="inline-flex rounded-md shadow-sm">
+			{% if posts.has_previous %}
+				{% if posts.number != 1 %}
+					<a href="?page=1" class="px-3 py-2 bg-blue-200 text-blue-700 rounded-l-md hover:bg-blue-300">First</a>
+				{% endif %}
+				<a href="?page={{ posts.previous_page_number }}" class="px-3 py-2 bg-blue-200 text-blue-700 hover:bg-blue-300">Previous</a>
+			{% endif %}
+
+			{% for num in posts.paginator.page_range %}
+				{% if num == posts.number %}
+					<span class="px-3 py-2 bg-blue-700 text-white">{{ num }}</span>
+				{% else %}
+					<a href="?page={{ num }}" class="px-3 py-2 bg-blue-200 text-blue-700 hover:bg-blue-300">{{ num }}</a>
+				{% endif %}
+			{% endfor %}
+
+			{% if posts.has_next %}
+				<a href="?page={{ posts.number|add:1 }}" class="px-3 py-2 bg-blue-200 text-blue-700 hover:bg-blue-300">Next</a>
+				{% if posts.number != posts.paginator.num_pages|add:"- 1" %}
+					<a href="?page={{ posts.paginator.num_pages }}" class="px-3 py-2 bg-blue-200 text-blue-700 rounded-r-md hover:bg-blue-300">Last</a>
+				{% endif %}
+			{% endif %}
+		</nav>
+	</div>
+
+
+
+
 </main>
 {% endblock content %}

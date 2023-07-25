@@ -1,0 +1,27 @@
+/* 페이지네이션 컨테이너 스타일 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  /* 페이지네이션 링크 스타일 */
+  .pagination a {
+    padding: 0.5rem 0.75rem;
+    background-color: #e2e8f0; /* 연한 파란색 */
+    color: #4299e1; /* 진한 파란색 */
+    text-decoration: none;
+    border-radius: 0.25rem;
+    margin-right: 0.25rem;
+  }
+  
+  /* 현재 페이지 링크 스타일 */
+  .pagination .current {
+    padding: 0.5rem 0.75rem;
+    background-color: #4299e1; /* 진한 파란색 */
+    color: #ffffff; /* 흰색 */
+    text-decoration: none;
+    border-radius: 0.25rem;
+    margin-right: 0.25rem;
+  }
+  

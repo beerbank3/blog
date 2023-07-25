@@ -4,10 +4,10 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
-from os.path import relpath
 from .models import Post, Category, UploadImage, User
 from .decorators import log_action
 from .forms import PostForm, CommentForm
+from os.path import relpath
 import os
 # Create your views here.
 
@@ -16,6 +16,7 @@ import os
 @method_decorator(login_required, name='dispatch')
 @method_decorator(log_action(action='Index'), name='get')
 class Index(View):
+
 
     def get(self, request):
         current_user_id = request.user.id
